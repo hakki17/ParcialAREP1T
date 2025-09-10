@@ -23,6 +23,8 @@ Profe no supe hacerlo dividiendo las funciones, asi que hice en el backend la cl
 
 Para la desviación hacemos la ecuación usando métodos Math como pow (^2), y sqrt (raiz cuadrada)
 
+# El video se encuentra en la raiz del proyecto y se llama "videoprueba.mp4"
+
 ## directorio
 
 ![](https://github.com/hakki17/ParcialAREP1T/blob/main/img/arquitectura.png)
