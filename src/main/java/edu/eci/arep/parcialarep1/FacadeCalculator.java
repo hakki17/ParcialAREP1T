@@ -49,10 +49,10 @@ public class FacadeCalculator {
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(clientSocket.getInputStream()));
             String inputLine, outputLine = "";
-            String requestLine = ""; // Solo la primera línea nos interesa
+            String requestLine = "";
 
             while ((inputLine = in.readLine()) != null) {
-                if (inputLine.startsWith("GET")) { // Solo procesar la línea GET
+                if (inputLine.startsWith("GET")) {
                     requestLine = inputLine;
                 }
                 System.out.println("Recibí: " + inputLine);
@@ -61,7 +61,6 @@ public class FacadeCalculator {
                 }
             }
 
-            // Procesar solo si tenemos una línea de petición válida
             if (!requestLine.isEmpty()) {
                 try {
                     URI uri = new URI(requestLine.split(" ")[1]);
@@ -133,11 +132,12 @@ public class FacadeCalculator {
                 + "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
                 + "    </head>\n"
                 + "    <body>\n"
-                + "        <h1>Calculadora de Media</h1>\n"
+                + "        <h1>Calculadora</h1>\n"
                 + "        <form>\n"
                 + "            <label for=\"params\">Números (separados por comas):</label><br>\n"
                 + "            <input type=\"text\" id=\"params\" name=\"params\" placeholder=\"1,2,3\"><br><br>\n"
-                + "            <input type=\"button\" value=\"Calcular\" onclick=\"loadGetMsg()\">\n"
+                + "            <input type=\"button\" value=\"Calcular Media\" onclick=\"loadGetMsg('media')\">\n"
+                + "            <input type=\"button\" value=\"Calcular Desviación Estándar\" onclick=\"loadGetMsg('desviacion')\">\n"
                 + "        </form> \n"
                 + "        <h3>Resultado</h3>\n"
                 + "        <div id=\"getrespmsg\"></div>\n"
@@ -149,14 +149,14 @@ public class FacadeCalculator {
 
     public static String clientJS() {
         return "        <script>\n"
-                + "            function loadGetMsg() {\n"
+                + "            function loadGetMsg(operation) {\n"
                 + "                let paramsVar = document.getElementById(\"params\").value;\n"
                 + "                const xhttp = new XMLHttpRequest();\n"
                 + "                xhttp.onload = function() {\n"
                 + "                    document.getElementById(\"getrespmsg\").innerHTML =\n"
                 + "                    this.responseText;\n"
                 + "                }\n"
-                + "                xhttp.open(\"GET\", \"/compute?params=\" + paramsVar);\n"
+                + "                xhttp.open(\"GET\", \"/compute?operation=\" + operation + \"&params=\" + paramsVar);\n"
                 + "                xhttp.send();\n"
                 + "            }\n"
                 + "        </script>\n";
